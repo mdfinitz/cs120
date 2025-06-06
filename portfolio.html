@@ -1,0 +1,116 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            background-image:linear-gradient(to bottom, #4695F0, #C5E4F0);
+            font-family:"Cabin", sans-serif;
+            font-optical-sizing:20;
+            font-weight:400;
+            font-style:normal;
+            font-variation-settings:"wdth" 100;
+            background-repeat:no-repeat;
+            height:100%
+        }
+        
+        div div {
+            font-size:20px;
+            font-weight:bold;
+            text-align:center
+        }
+
+        .top_border {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            border-style:solid;
+            border-radius:30px;
+            border-color:rgb(14, 53, 138);
+            border-width:3px;
+            background-color:rgb(203, 198, 198);
+            margin:40px 40px 80px 40px;
+            padding:20px;
+        }
+
+        .mid_border {
+            text-align:center;
+            border-style:solid;
+            border-radius:30px;
+            border-color:rgb(14, 53, 138);
+            border-width:3px;
+            background-color:rgb(203, 198, 198);
+            margin:10px auto;
+            width:30%;
+            padding:10px;
+        }
+
+        #large {
+            font-size:30px
+        }
+
+        #medium {
+            font-size:25px;
+        }
+
+        #assignments {
+            font-size:20px
+        }
+
+        #align_left {
+            text-align:left
+        }
+
+        a {
+            text-decoration:none
+        }
+
+        a:link,a:visited,a:active {
+            color:#176396;
+            text-decoration:none;
+        }
+
+        @media (max-width:850px) {
+            .mid_border {
+                width:50%;
+            }
+        }
+
+        @media (max-width:650px) {
+            .mid_border {
+                width:70%;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="top_border">
+        <div id="large">CS120: Web Development and Engineering</div>
+        <div>Portfolio</div>
+        <div>Mitchell Finitz</div>
+    </div>
+
+    <div class="assigments mid_border">
+        <div id="medium">Projects</div>
+        <div id="align_left">
+            <ul>
+                <li><a href="https://mitchellf.sgedu.site/cs120/about_me.html" target="_blank">Assignment 1 (HTML) on cPanel</li>
+                <li><a href="https://mdfinitz.github.io/cs120/about_me.html" target="_blank">Assignment 1 (HTML) on GitHub</li>
+                <li><a href="https://mdfinitz.github.io/cs120/me_two.html" target="_blank">Assignment 2 (CSS) on GitHub</li>
+                <li><a href="https://mdfinitz.github.io/cs120/project1.html" target="_blank">Project 1</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
