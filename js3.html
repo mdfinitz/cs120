@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS3 Assignment</title>
+</head>
+
+<body>
+    <h1>JS3 Assignment</h1>
+
+    <script>
+        first = prompt("Please enter a number.");
+
+        while (isNaN(first)) {
+            first = prompt("You did not enter a number. Please enter a valid number");
+        }
+
+        second = prompt("Please enter a second number.");
+
+        while (isNaN(second)) {
+            second = prompt("You did not enter a number. Please enter a valid number");
+        }
+
+        first = parseFloat(first);
+        second = parseFloat(second);
+
+        if (first < second) {
+            smallest = first;
+            largest = second;
+        }
+        else {
+            smallest = second;
+            largest = first;
+        }
+
+        console.log("The numbers you gave in order from smallest to largest are:\n" + smallest + ", " + largest);
+    </script>
+</body>
+</html>

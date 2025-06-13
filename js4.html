@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS4 Assignment</title>
+</head>
+
+<body>
+    <h1>JS4 Assignment</h1>
+
+    <script>
+        min = prompt("Please enter an integer");
+
+        while (isNaN(min) || !Number.isInteger(parseFloat(min))) {
+            min = prompt("You did not give an integer. Please give a valid input.");
+        }
+
+        max = prompt("Please enter a second integer");
+
+        while (isNaN(max) || !Number.isInteger(parseFloat(max)) || parseInt(max) < parseInt(min)) {
+            max = prompt("The second number is not an integer greater than or equal to the first input. Please give a valid input.");
+        }
+
+        min = parseInt(min);
+        max = parseInt(max);
+
+        total = 0;
+
+        document.write("The odd numbers in the range given are:<br />");
+
+        for (let i = min; i <= max; i++) {
+            total += i;
+            if (Math.abs(i) % 2 == 1) {
+                if (i == max || i == (max - 1)) document.write(i + "<br /><br />");
+                else document.write(i + ", ");
+            }
+        }
+
+        document.write("The total sum of the integers in the range given is:<br />" + total);
+    </script>
+</body>
+</html>

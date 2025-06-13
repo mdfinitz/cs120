@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS1 Assignment</title>
+</head>
+
+<body>
+    <h1>JS1 Assignment</h1>
+
+    <script>
+        fname = prompt("What is your first name?");
+        lname = prompt("What is your last name?");
+        alert("Your name is " + fname + " " + lname);
+
+        age = prompt("How many children do you have?");
+        
+        while (isNaN(age) || !Number.isInteger(parseFloat(age)) || parseInt(age) < 0) {
+            age = prompt("You did not give an integer greater than or equal to 0. Please give a valid input.");
+        }
+
+        age = parseInt(age);
+
+        if (age == 0) document.write("You have no children <br />");
+        if (age == 1) document.write("You have 1 child <br />");
+        if (age > 1) document.write("You have " + age + " children <br />");
+    </script>
+</body>
+</html>

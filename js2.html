@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS2 Assignment</title>
+</head>
+
+<body>
+    <h1>JS2 Assignment</h1>
+
+    <script>
+        far = prompt("What is the temperature in Farenheit?");
+
+        while (isNaN(far)) {
+            far = prompt("You did not enter a number. Please enter a valid temperature in Farenheit.");
+        }
+
+        cel = ((parseFloat(far) - 32)*(5/9));
+
+        alert("The temperate you gave is " + cel + " in Celcius");
+
+        cel = prompt("What is the temperature in Celcius?");
+        
+        while (isNaN(cel)) {
+            cel = prompt("You did not enter a number. Please enter a valid temperature in Celcius.");
+        }
+        
+        far = ((parseFloat(cel)*(9/5)) + 32);
+
+        alert("The temperature you gave is " + far + " in Farenheit");
+    </script>
+</body>
+</html>
