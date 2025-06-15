@@ -3,7 +3,7 @@ document.write("<div id='nav'>");
         document.write("<li><a href='home.html'>HOME</a></li>");
         document.write("<li><a href='book.html'>BOOK</a></li>");
         document.write("<li><a href='songs.html'>SONGS</a></li>");
-        document.write("<li><a href='home.html'><img src='../images/logo.png'></a></li>");
+        document.write("<li><a href='home.html'><img src='../images/logo.png' alt='Band logo'></a></li>");
         document.write("<li><a href='merchandise.html'>MERCHANDISE</a></li>");
         document.write("<li><a href='faq.html'>FAQ</a></li>");
     document.write("</ul>");
