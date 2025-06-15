@@ -35,8 +35,8 @@
     <div class="section2 book">
         <form class="reserve" action="project1_book_message.html">
             <div>
-                <div>
-                    <div class="label-container">
+                <div class="input-box">
+                    <div class="label-container label-left">
                         <div>
                             <label for="fname">First name:</label>
                             <input class="non-check-input" type="text" name="fname" id="fname" placeholder="First Name" />
@@ -53,7 +53,7 @@
                             <label for="city">City:</label>
                             <input class="non-check-input" type="text" name="city" id="lname" placeholder="City" />
                         </div>
-                        <div>
+                        <div style="margin-bottom:0px;">
                             <label for="state">State:</label>
                             <select name="state" id="state">
                                 <option value="maine">Maine</option>
@@ -65,9 +65,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <div class="label-container">
+                    <div class="label-container label-right">
                         <div>
                             <label for="event-desc">Event Description:</label>
                             <select name="event-desc" id="event-desc">
@@ -110,15 +108,15 @@
                                 <label for="electronic">Electronic</label>
                             </div>
                         </div>
-                        <div>
-                            <label for="info">Tell us about yourself!</label>
-                            <textarea name="info" id="info"></textarea>
-                        </div>
                     </div>
+                </div>
+                <div class="textarea-box">
+                    <label for="info">Tell us about yourself!</label>
+                    <textarea name="info" id="info"></textarea>
                 </div>
             </div>
             <div>
-                <input class="rsvp-button" type="submit" value="BOOK NOW">
+                <input class="rsvp-button" type="submit" value="BOOK">
             </div>
         </form>
     </div>

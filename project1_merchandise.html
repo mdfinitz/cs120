@@ -7,13 +7,26 @@
 
     <style type="text/css">
 
+        #second_browser_width {
+            display:none;
+        }
+
+        #third_browser_width {
+            display:none;
+        }
+
         table,td,th {
-            border:1.5px solid #F0A45B;
+            border:1.5px solid #E58500;
             vertical-align:middle;
             font-size:25px;
             font-weight:400;
             font-family:"Manrope", sans-serif;
             text-align:center;
+            margin:0px auto;
+        }
+
+        table {
+            margin:20px 0px;
             margin:0px auto;
         }
 
@@ -23,16 +36,23 @@
         }
 
         thead th {
-            background-color:#F5DD9D;
+            background-color:#F5C449;
             font-family:"Montserrat", sans-serif;
             font-size:30px;
             font-weight:700;
         }
 
         td,th {
-            background-color:#F3F2F3;
+            background-color:#F5DD9D;
         }
 
+        td {
+            width:232px;
+        }
+
+        img {
+            margin:0px auto;
+        }
 
         .buy a {
             padding:10px;
@@ -40,7 +60,7 @@
             text-decoration:none;
             border:3px solid #495DA4;
             border-radius:25px;
-            background-color:#F5DD9D;
+            background-color:#F5C449;
             display:block;
             width:75px;
             color:#495DA4;
@@ -50,6 +70,34 @@
         .buy a:hover {
             background-color:#495DA4;
             color:#F5DD9D;
+        }
+
+        @media (max-width:1050px) {
+            #first_browser_width {
+                display:none;
+            }
+
+            #second_browser_width {
+                display:block;
+            }
+
+            #third_browser_width {
+                display:none;
+            }
+        }
+
+        @media (max-width:700px) {
+            #first_browser_width {
+                display:none;
+            }
+
+            #second_browser_width {
+                display:none;
+            }
+
+            #third_browser_width {
+                display:block;
+            }
         }
 
     </style>
@@ -76,7 +124,7 @@
         <div class="header-no-border">You've headed to the right place!<br />Take advantage of the great sales and invest in some our awesome merch'.</div>
     </div>
     <div class="section2">
-        <div>
+        <div id="first_browser_width">
             <table cellpadding="4" cellspacing="0">
                 <thead>
                     <tr>
@@ -117,6 +165,169 @@
                 </tr>
             </table>
         </div>
+        <div id="second_browser_width">
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>SHIRTS</th>
+                        <th>SWEATSHIRTS</th>
+                        <th>ALBUM</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/shirt.jpg"></td>
+                    <td><img src="images/sweatshirt.jpg"></td>
+                    <td><img src="images/album.jpg"></td>
+                </tr>
+                <tr>
+                    <td>$40</td>
+                    <td>$60</td>
+                    <td>$30</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 HALF OFF</td>
+                    <td>BUY 1<br />GET 1 HALF OFF</td>
+                    <td>BUY 1<br />GET 1 FREE</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>POSTER</th>
+                        <th>STICKER</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/poster.jpg"></td>
+                    <td><img src="images/sticker.png"></td>
+                </tr>
+                <tr>
+                    <td>$20</td>
+                    <td>$10</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 FREE</td>
+                    <td>BUY 1<br />GET 2 FREE</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+        </div>
+        <div id="third_browser_width">
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>SHIRTS</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/shirt.jpg"></td>
+                </tr>
+                <tr>
+                    <td>$40</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 HALF OFF</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>SWEATSHIRTS</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/sweatshirt.jpg"></td>
+                </tr>
+                <tr>
+                    <td>$60</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 HALF OFF</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ALBUM</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/album.jpg"></td>
+                </tr>
+                <tr>
+                    <td>$30</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 FREE</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>POSTER</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/poster.jpg"></td>
+                </tr>
+                <tr>
+                    <td>$20</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 1 FREE</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+            <table cellpadding="4" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>STICKER</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><img src="images/sticker.png"></td>
+                </tr>
+                <tr>
+                    <td>$10</td>
+                </tr>
+                <tr>
+                    <td>BUY 1<br />GET 2 FREE</td>
+                </tr>
+                <tr class="buy">
+                    <td><a href="project1_buy_message.html">BUY</a></td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        
     </div>
     <footer>
         <div id="end">
