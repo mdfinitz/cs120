@@ -13,11 +13,9 @@
         html {
             background-image:linear-gradient(to bottom, #4695F0, #C5E4F0);
             font-family:"Cabin", sans-serif;
-            font-optical-sizing:20;
             font-weight:400;
-            font-style:normal;
-            font-variation-settings:"wdth" 100;
             background-repeat:no-repeat;
+            background-size:cover;
             height:100%
         }
         
@@ -28,7 +26,7 @@
         }
 
         .top_border {
-            display:flex;
+            display:block;
             flex-direction:column;
             align-items:center;
             justify-content:center;
@@ -37,8 +35,9 @@
             border-color:rgb(14, 53, 138);
             border-width:3px;
             background-color:rgb(203, 198, 198);
-            margin:40px 40px 80px 40px;
+            margin:40px auto 80px auto;
             padding:20px;
+            max-width:700px;
         }
 
         .mid_border {
@@ -50,6 +49,7 @@
             background-color:rgb(203, 198, 198);
             margin:10px auto;
             width:30%;
+            max-width:350px;
             padding:10px;
         }
 
@@ -91,6 +91,8 @@
         }
         
     </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
@@ -107,7 +109,7 @@
                 <li><a href="https://mitchellf.sgedu.site/cs120/about_me.html" target="_blank">Assignment 1 (HTML) on cPanel</li>
                 <li><a href="https://mdfinitz.github.io/cs120/about_me.html" target="_blank">Assignment 1 (HTML) on GitHub</li>
                 <li><a href="https://mdfinitz.github.io/cs120/me_two.html" target="_blank">Assignment 2 (CSS) on GitHub</li>
-                <li><a href="https://mdfinitz.github.io/cs120/project1.html" target="_blank">Project 1</li>
+                <li><a href="https://mdfinitz.github.io/cs120/project1/home.html" target="_blank">Project 1</li>
             </ul>
         </div>
     </div>
