@@ -676,4 +676,10 @@ textarea {
     .header {
         font-size:25px;
     }
+
+    #book-event-header {
+        width:250px;
+        padding:0px;
+        margin:0px auto;
+    }
 }
