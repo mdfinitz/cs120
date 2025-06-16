@@ -123,6 +123,7 @@ body {
     justify-content:space-between;
     margin:0px auto;
     width:25%;
+    max-width:430px;
     margin:20px auto 0px auto;
 }
 
@@ -272,12 +273,14 @@ body {
 
 .listing-blocks.concert-info {
     width:50%;
+    max-width:600px;
     text-align:left;
 }
 
 .listing-blocks.ticket-info {
     width:15%;
     min-width:115px;
+    max-width:170px;
     text-align:center;
     text-decoration:none;
     color:#F5DD9D;
@@ -327,11 +330,13 @@ label,input,select,textarea {
 
 .label-left {
     width:30%;
+    max-width:350px;
     margin-left:150px;
 }
 
 .label-right {
     width:40%;
+    max-width:450px;
 }
 
 .label-container > div {
@@ -372,6 +377,7 @@ label,input,select,textarea {
 .textarea-box {
     display:block;
     width:60%;
+    max-width:750px;
     text-align:left;
     margin:50px auto;
 }
@@ -434,6 +440,7 @@ textarea {
 
 .faq .block-elt {
     display:flex;
+    max-width:950px;
 }
 
 .block-elt img {
@@ -667,6 +674,6 @@ textarea {
     }
 
     .header {
-        font-size:30px;
+        font-size:25px;
     }
 }
