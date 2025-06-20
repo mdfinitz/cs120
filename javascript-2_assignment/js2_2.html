@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS2-2 Assignment</title>
+</head>
+
+<body>
+    <h1>JS2-2 Assignment</h1>
+
+    <div id="result"></div>
+
+    <script>
+        words = prompt("Please enter a sentence as input.");
+
+        words = words.split(" ");
+
+        numWords = 0;
+
+        for (i = 0; i < words.length; i++) {
+            if (words[i] != "") numWords++;
+        }
+
+        if (numWords == 1) document.getElementById("result").innerHTML = "The sentence you entered has " + numWords + " word.";
+        else document.getElementById("result").innerHTML = "The sentence you entered has " + numWords + " words.";
+    </script>
+</body>
+</html>

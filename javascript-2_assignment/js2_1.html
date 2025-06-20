@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS2-1 Assignment</title>
+
+    <style type='text/css'>
+        div {
+            margin-bottom:20px;      
+        }
+
+        #arr-error-message,#nums-error-message {
+            color:red;
+        }
+    </style>
+
+    <script>
+        function count(arr,numVal) {
+            lessThan = 0;
+            for (let i = 0; i < arr.length; ++i) {
+                if (arr[i] < numVal) lessThan;
+            }
+            return lessThan;
+        }
+
+        function testCount() {
+            document.getElementById("arr-error-message").innerHTML = "";
+            document.getElementById("nums-error-message").innerHTML = "";
+            document.getElementById("total-error-message").innerHTML = "";
+            document.getElementById("result").innerHTML = "";
+
+            arrNums = new Array();
+            arrNumsIsValid = true;
+            numsValIsValid = true;
+
+            arrNums = document.getElementById("nums-array").value.split("#");
+
+            for (let i = 0; i < arrNums.length; ++i) {
+                if (arrNums[i] == "" || isNaN(arrNums[i])) {
+                    arrNumsIsValid = false;
+                    document.getElementById("arr-error-message").innerHTML = "Your input is not a valid sequence of numbers. Please use the syntax described for input."
+                    break;
+                }
+            }
+
+            numsVal = document.getElementById("nums").value;
+            if (numsVal == "" || isNaN(numsVal)) {
+                numsValIsValid = false;
+                document.getElementById("nums-error-message").innerHTML = "Your input is not a number. Please enter a valid number fori input."
+            }
+            else {
+                document.getElementById("nums-error-message").innerHTML = ""
+            }
+
+            if (!arrNumsIsValid || !numsValIsValid) {
+                document.getElementById("total-error-message").style.color = "red";
+                document.getElementById("total-error-message").innerHTML = "At least one of your inputs was not valid. Please see messages above."
+            }
+            else {
+                document.getElementById("total-error-message").style.color = "green";
+                document.getElementById("total-error-message").innerHTML = "Your input was valid!"
+                total = count(arrNums,numsVal);
+                document.getElementById("result").innerHTML = "The array you gave is: " + arrNums.toString() + "<br />The value you gave is: " + numsVal + "<br />The numbers in the array less than " + numsVal + " is: " + total;
+            }
+        }
+
+        window.onload = () => { 
+            const btn = document.getElementById("val-input-btn");
+            btn.addEventListener('click',testCount);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>JS2-1 Assignment</h1>
+
+    <label for="nums-array">Please enter a sequence numbers in the form "X#X#X" where 'X' is a number:</label>
+    <input type="text" name="nums-array" id="nums-array">
+    <div id="arr-error-message"></div>
+    <label for="nums">Please enter a number:</label>
+    <input type="text" name="nums" id="nums">
+    <div id="nums-error-message"></div>
+    <button type="submit" name="btn" id="val-input-btn">Submit</button>
+    <div id="total-error-message"></div>
+    <div id="result"></div>
+    
+</body>
+</html>
