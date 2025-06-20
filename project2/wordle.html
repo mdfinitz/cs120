@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wordle</title>
+
+    <style type='text/css'>
+        body div div div {
+            display:inline-block;
+            border:1px solid black;
+            box-sizing:border-box;
+            height:100%;
+            width:50px;
+            margin-right:4px;
+            border-radius:10px;
+        }
+
+        body > div > div {
+            display:flow-root;
+            height:50px;
+            margin-bottom:4px;
+        }
+    </style>
+
+    <script>
+        window.onload = () => {
+            currWord = 0;
+            randWords = ["AGREE","ALLOW","BASIL","BOARD","BREAD",
+                         "CLEAR","CRATE","DREAD","EAGER","EAGLE",
+                         "FABLE","FALSE","FRESH","GLORY","HOTEL",
+                         "INNER","LABOR","LABEL","MOVIE","MOUSE",
+                         "PILOT","PRIZE","RADAR","RULER","SCARF",
+                         "SCRAP","SKILL","TROUT","TIMER","ZEBRA"];
+
+            const btn = document.getElementById("submit-word");
+            btn.addEventListener('click',checkWord);
+        }
+
+        function checkWord() {
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <script>
+        container = document.createElement('div');
+        container.setAttribute('id','words-container');
+        document.body.appendChild(container);
+
+        for (i = 0; i < 6; i++) {
+            
+            row = document.createElement('div');
+            row.setAttribute('id',i + "");
+            container.appendChild(row);
+
+            for (j = 0; j < 5; j++) {
+                row_col = document.createElement('div');
+                row_col.setAttribute('id','blank');
+                row.appendChild(row_col);
+            }
+        }        
+    </script>
+
+    <input type="text" name="guess-word" id="guess-word" />
+    <button type="button" name="submit-word" id="submit-word">Check my Word</button>
+</body>
+</html>
