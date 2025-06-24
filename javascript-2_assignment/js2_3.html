@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS2-3 Assignment</title>
+
+    <script>
+
+        window.onload = () => {
+            wordsList = document.createElement('ol');
+            result = document.getElementById('answer');
+            result.appendChild(wordsList);
+
+            names="Lexi,Jace,Theo,Mira,Ren";
+            wordsArr = names.split(",");
+            
+            wordsArr.forEach((element) => {
+                wordItem = document.createElement('li');
+                wordItem.innerHTML = element;
+                wordsList.appendChild(wordItem);
+            });
+        }   
+             
+    </script>
+</head>
+
+<body>
+    <h1>JS2-3 Assignment</h1>
+
+    <div id="answer"></div>
+</body>
+</html>

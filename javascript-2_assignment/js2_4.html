@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS2-4 Assignment</title>
+
+    <script>
+
+        function speak(prefix) {
+            name = document.getElementById("user-name").value;
+            document.getElementById("answer").innerHTML = prefix + " " + name;
+        }
+        
+    </script>
+</head>
+
+<body>
+    <h1>JS2-4 Assignment</h1>
+
+    <form>
+        <label for="user-name"></label>
+        <input type="text" name="user-name" id="user-name">
+        <input type='button' value="Hello" id="hello" onclick="speak('Hello')">
+        <input type='button' value="Good Bye" id="goodbye" onclick="speak('Good Bye')">
+        <input type='button' value="Greetings" id="greetings" onclick="speak('Greetings')">
+    </form>
+
+    <div id="answer"></div>
+        
+</body>
+</html>

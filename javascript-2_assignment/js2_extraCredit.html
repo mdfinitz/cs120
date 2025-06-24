@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS2 Extra Credit Assignment</title>
+
+    <style type='text/css'>
+
+        #select-state {
+            display:inline-block;
+        }
+
+        #add-state {
+            display:inline-block;
+            margin-left:20px;
+            vertical-align:top;
+        }
+
+        #answer {
+            border:2px solid black;
+            margin:20px 0px;
+            width:300px;
+        }
+        
+    </style>
+
+    <script>
+
+        arr = ["Maine",
+            "New Hampshire",
+            "Massachusetts",
+            "Vermont",
+            "New York",
+            "Montana",
+            "Wyoming",
+            "Utah",
+            "Colorado",
+            "California"];
+
+        function populateStates(states) {
+            states.forEach((element,index) => {
+                selectElt = document.createElement('option');
+                selectElt.innerHTML = element;
+                if (index === 0) selectElt.toggleAttribute('selected',true);
+                document.getElementById('select-state').appendChild(selectElt);
+            });
+            document.getElementById('select-state').setAttribute('size','10');
+        }
+
+        window.onload = () => {
+            
+            document.getElementById('add-state').addEventListener('click',() => {
+                stateDropDown = document.getElementById('select-state');
+                stateSelected = stateDropDown.selectedIndex;
+                stateName = stateDropDown.options[stateSelected].value;
+            
+                addStateToList = document.createElement('li');
+                addStateToList.innerHTML = stateName;
+                document.getElementById('state-list').appendChild(addStateToList);
+
+                stateDropDown.removeChild(stateDropDown.options[stateSelected]);
+
+                stateDropDown.setAttribute('size',stateDropDown.getAttribute('size') - 1)
+            });
+
+            document.getElementById('clear-state').addEventListener('click',() => {
+                document.getElementById('state-list').innerHTML = "";
+                document.getElementById('select-state').innerHTML = "";
+                populateStates(arr);
+            });
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>JS2-6 Assignment</h1>
+
+    <select id="select-state"></select>
+    <input type="button" value="Add State" id="add-state">
+
+    <div id="answer">
+        <ol id="state-list">
+            <script>
+                populateStates(arr);
+            </script>
+        </ol>
+    </div>
+
+    <input type="button" value="Clear States" id="clear-state">
+</body>
+</html>
