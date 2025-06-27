@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery Practice Assignment</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style type='text/css'>
+
+        body {
+            margin:0px;
+            font-family:"Noto Sans", sans-serif;
+        }
+
+        div {
+            border-radius:40px;         
+        }
+
+        #thumb-nail-section,#image-section,#image-display,#image-info {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        #thumb-nail-section {
+            background-color:#b8e6d8;
+            flex-wrap:wrap;
+            gap:25px;
+            padding:25px;
+            width:60%;
+            margin:30px auto;
+        }
+
+        #image-section {
+            gap:20px;
+        }
+
+        #image-display {
+            background-color:#b8e6d8;
+            height:700px;
+            width:900px;
+        }
+
+        #image-display img {
+            width:80%;
+            display:none;
+            border-radius:30px;
+            padding:20px;
+        }
+
+        #image-info {
+            flex-direction:column;
+            background-color:#b8e6d8;
+            height:100px;
+            width:300px;
+            border-radius:15px;
+            gap:5px;
+        }
+
+        .label {
+            font-weight:800;
+        }
+
+        #name .value {
+            font-style:italic;
+        }
+
+        @media (max-width:1300px) {
+            #image-section {
+                flex-direction:column;
+                gap:30px;
+                width:80%;
+                margin:0px auto;
+            }
+
+            #image-display {
+                width:800px;
+            }
+        }
+
+        @media (max-width:850px) {
+            #image-display {
+                width:90%;
+                height:400px;
+            }
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            function GalleryItem(name,price,thumbNailImg,largeImg) {
+                this.name = name;
+                this.price = price;
+                this.thumbNailImg = thumbNailImg;
+                this.largeImg = largeImg;
+            }
+            
+            image1 = new GalleryItem("A Rocky Landscape",  "$5,000", "../images/A_Rocky_Landscape_TN.jpg",  "../images/A_Rocky_Landscape.jpg");
+            image2 = new GalleryItem("A Shooting Star",    "$8,000", "../images/A_Shooting_Star_TN.jpg",    "../images/A_Shooting_Star.jpg");;
+            image3 = new GalleryItem("Cliffsides of Grass","$15,000","../images/Cliffsides_of_Grass_TN.jpg","../images/Cliffsides_of_Grass.jpg");;
+            image4 = new GalleryItem("Grassy Plains",      "$10,000","../images/Grassy_Plains_TN.jpg",      "../images/Grassy_Plains.jpg");;
+            image5 = new GalleryItem("Mist along the Lake","$3,000", "../images/Mist_along_the_Lake_TN.jpg","../images/Mist_along_the_Lake.jpg");;
+
+            images = [image1,image2,image3,image4,image5];
+
+            listing = ['name','price'];
+
+            $.each(images,(index,element) => {
+                var currImg = $('<img>', {
+                        id: 'thumbNail' + index,
+                        class: 'thumbNail',
+                        src: element.thumbNailImg,
+                        style: 'width:100px; display:block; border-radius:30px; margin:0px auto; vertical-align:middle;'
+                });
+                $('#thumb-nail-section').append(currImg);
+                $('#thumbNail' + index).data('gallery',element);
+            });
+
+            $.each(listing,(index,element) => {
+                var blockContainer = $('<div>', {
+                    id: element,
+                    style: 'text-align:center; width:100%;'
+                });
+                $('#image-info').append(blockContainer);
+                var leftBlock = $('<div>', {
+                    class: 'label',
+                    style: 'text-align:right; width:35%; display:inline-block; margin-right:10px;'
+                });
+                var rightBlock = $('<div>', {
+                    class: 'value',
+                    style: 'text-align:left; width:60%; display:inline-block;'
+                });
+                $('#' + element).append(leftBlock);
+                $('#' + element).append(rightBlock);
+            })
+
+            $('.thumbNail').hover(
+                function()
+                {
+                    $('#image-display img').attr('src',$(this).data('gallery').largeImg);
+                    $('#image-display img').stop(true,true).fadeIn(1000);
+                },
+                function()
+                {
+                    $('#image-display img').stop(true,true).fadeOut(1000);
+                }
+            );
+
+            $('.thumbNail').click(
+                function()
+                {
+                    $('#image-info #name .label').stop(true,true);
+                    $('#image-info #name .value').stop(true,true);
+                    $('#image-info #price .label').stop(true,true);
+                    $('#image-info #price .value').stop(true,true);
+
+                    $('#image-info #name .label').css('display','inline-block');
+                    $('#image-info #name .label').html('Name:');
+
+                    $('#image-info #name .value').css('display','inline-block');
+                    $('#image-info #name .value').html($(this).data('gallery').name);
+
+                    $('#image-info #price .label').css('display','inline-block');
+                    $('#image-info #price .label').html('Price:');
+
+                    $('#image-info #price .value').css('display','inline-block');
+                    $('#image-info #price .value').html($(this).data('gallery').price);
+
+                    setTimeout(function() {
+                        $('#image-info #name .label').fadeOut(500,function() {
+                            $('#image-info #name .label').html('');
+                        });
+                        $('#image-info #name .value').fadeOut(500,function() {
+                            $('#image-info #name .value').html('');
+                        });
+                        $('#image-info #price .label').fadeOut(500,function() {
+                            $('#image-info #price .label').html('');
+                        });
+                        $('#image-info #price .value').fadeOut(500,function() {
+                            $('#image-info #price .value').html('');
+
+
+                        });
+                    },4000);
+                }
+            )
+        });
+    </script>
+</head>
+
+<body>
+    <div id="thumb-nail-section"></div>
+    <div id="image-section">
+        <div id="image-display"><img></div>
+        <div id="image-info"></div>
+    </div>
+</body>
+</html>
