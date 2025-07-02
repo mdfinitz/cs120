@@ -6,7 +6,6 @@
     <title>JSON-3 Assignment</title>
 
     <style type='text/css'>
-
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -17,9 +16,9 @@
                 var obj = data;
                 var genreSelect = $('<select>', {
                     id: 'song-select',
-                    size: '10'
+                    size: '7'
                 });
-                $('body').append(genreSelect);
+                $('body').before('#filter-genre');
 
                 $.each(obj.genres,(index,element) => {
                     genre = $('<option>');
@@ -27,14 +26,30 @@
                     genre.html(element);
                     $('#song-select').append(genre);
                 })
+
+                $('#filter-genre').prop('disabled',false);
             }
 
             $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
+
+            $('#filter-genre').click(
+                function()
+                {
+                    var selectedGenre = $('song-select').val();
+                    $('#song-display').html('<ul>');
+                    $.each(obj.songs,(index,element) => {
+                        if (element.genre.includes(selectedGenre)) $('song-display').append('<li>' + element.title + '</li>');
+                    });
+                    $('#song-display').append('</ul>');
+                }
+            )
         });
     </script>
 </head>
 
 <body>
     <h1>JSON-3 Assignment</h1>
+    <input type="button" value="Filter" id="filter-genre" disabled>
+    <div id="song-display"></div>
 </body>
 </html>
