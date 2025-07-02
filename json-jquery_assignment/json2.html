@@ -13,14 +13,34 @@
 
     <script>
         function populateSongList(data) {
-            console.log(data);
+            var obj = data;
             
             var songList = $('div', {
-                id: 'song-list'
+                id: 'song-container'
             });
+
+            $.each(obj.songs,(index,element) => {
+                var songBlock = $('div', {
+                    id: 'song-block-' + index
+                });
+                
+                var songTitle = $('div', {
+                    class: 'song-title'
+                });
+
+                var songInfo = $('div', {
+                    class:'song-info'
+                });
+
+                $('#song-container').append(songBlock);
+                $('#song-block-' + index).append(songTitle,songInfo);
+
+                songTitle.innerHTML = element.title;
+                songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
+            })
         }
 
-        $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList);
+        $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
     </script>
 </head>
 
