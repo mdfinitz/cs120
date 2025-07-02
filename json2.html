@@ -12,35 +12,36 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
-        function populateSongList(data) {
-            var obj = data;
-            var songList = $('div', {
-                id: 'song-container'
-            });
-            console.log(data);
-            $('body').append(songList);
-            $.each(obj.songs,(index,element) => {
-                var songBlock = $('div', {
-                    id: 'song-block-' + index
+        $(document).ready(function() {
+            function populateSongList(data) {
+                var obj = data;
+                var songList = $('<div>', {
+                    id: 'song-container'
                 });
-                
-                var songTitle = $('div', {
-                    class: 'song-title'
-                });
+                $('body').append(songList);
+                $.each(obj.songs,(index,element) => {
+                    var songBlock = $('<div>', {
+                        id: 'song-block-' + index
+                    });
+                    
+                    var songTitle = $('<div>', {
+                        class: 'song-title'
+                    });
 
-                var songInfo = $('div', {
-                    class:'song-info'
-                });
+                    var songInfo = $('<div>', {
+                        class:'song-info'
+                    });
 
-                $('#song-container').append(songBlock);
-                $('#song-block-' + index).append(songTitle,songInfo);
+                    $('#song-container').append(songBlock);
+                    $('#song-block-' + index).append(songTitle,songInfo);
 
-                songTitle.innerHTML = element.title;
-                songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
-            })
-        }
+                    songTitle.innerHTML = element.title;
+                    songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
+                })
+            }
 
-        $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
+            $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
+        });
     </script>
 </head>
 
