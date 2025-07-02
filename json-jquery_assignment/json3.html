@@ -6,6 +6,9 @@
     <title>JSON-3 Assignment</title>
 
     <style type='text/css'>
+        input {
+            display:block;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -13,8 +16,8 @@
     <script>
         $(document).ready(function() {
             function populateSongList(data) {
-                var obj = data;
-                var genreSelect = $('<select>', {
+                obj = data;
+                let genreSelect = $('<select>', {
                     id: 'song-select',
                     size: '7'
                 });
@@ -30,12 +33,14 @@
                 $('#filter-genre').prop('disabled',false);
             }
 
+            var obj;
+
             $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
 
             $('#filter-genre').click(
                 function()
                 {
-                    var selectedGenre = $('#song-select').val();
+                    let selectedGenre = $('#song-select').val();
                     $('#song-display').html('<ul>');
                     $.each(obj.songs,(index,element) => {
                         if (element.genre.includes(selectedGenre)) $('#song-display').append('<li>' + element.title + '</li>');
