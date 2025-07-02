@@ -19,6 +19,9 @@
                     id: 'song-container'
                 });
                 $('body').append(songList);
+
+                console.log(obj.song[3].title);
+
                 $.each(obj.songs,(index,element) => {
                     var songBlock = $('<div>', {
                         id: 'song-block-' + index
@@ -37,6 +40,8 @@
 
                     songTitle.innerHTML = element.title;
                     songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
+
+                    console.log(element.title);
                 })
             }
 
