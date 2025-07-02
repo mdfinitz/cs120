@@ -35,10 +35,10 @@
             $('#filter-genre').click(
                 function()
                 {
-                    var selectedGenre = $('song-select').val();
+                    var selectedGenre = $('#song-select').val();
                     $('#song-display').html('<ul>');
                     $.each(obj.songs,(index,element) => {
-                        if (element.genre.includes(selectedGenre)) $('song-display').append('<li>' + element.title + '</li>');
+                        if (element.genre.includes(selectedGenre)) $('#song-display').append('<li>' + element.title + '</li>');
                     });
                     $('#song-display').append('</ul>');
                 }
