@@ -20,8 +20,6 @@
                 });
                 $('body').append(songList);
 
-                console.log(obj.songs[3].title);
-
                 $.each(obj.songs,(index,element) => {
                     var songBlock = $('<div>', {
                         id: 'song-block-' + index
@@ -38,10 +36,8 @@
                     $('#song-container').append(songBlock);
                     $('#song-block-' + index).append(songTitle,songInfo);
 
-                    songTitle.innerHTML = element.title;
-                    songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
-
-                    console.log(element.title);
+                    songTitle.html(element.title);
+                    songInfo.html('Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year);
                 })
             }
 
