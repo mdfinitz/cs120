@@ -19,6 +19,8 @@
                 id: 'song-container'
             });
 
+            $('body').append(songList);
+
             $.each(obj.songs,(index,element) => {
                 var songBlock = $('div', {
                     id: 'song-block-' + index
@@ -46,6 +48,5 @@
 
 <body>
     <h1>JSON-2 Assignment</h1>
-
 </body>
 </html>
