@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON-1 Assignment</title>
+
+    <style type='text/css'>
+
+    </style>
+
+    <script>
+        const myJson = {
+            "songs": [
+                {
+                    "title": "Run Away to Mars",
+                    "artist": "TALK",
+                    "year": 2023,
+                    "genre": ["Folk", "Indie"]
+                },
+                {
+                    "title": "Homegrown",
+                    "artist": "Zac Brown Band",
+                    "year": 2015,
+                    "genre": ["Country", "Rock"]
+                },
+                {
+                    "title": "It's My Life",
+                    "artist": "Bon Jovi",
+                    "year": 2000,
+                    "genre": ["Rock"]
+                },
+                {
+                    "title": "Saturday Sun",
+                    "artist": "Vance Joy",
+                    "year": 2018,
+                    "genre": ["Folk", "Indie"]
+                },
+                {
+                    "title": "Overnight",
+                    "artist": "Parcels",
+                    "year": 2017,
+                    "genre": ["Alternative", "Electronic", "Indie", "Pop"]
+                },
+                {
+                    "title": "Maine",
+                    "artist": "Noah Kahan",
+                    "year": 2024,
+                    "genre": ["Indie"]
+                },
+                {
+                    "title": "Burning Man",
+                    "artist": "Dierks Bentley",
+                    "year": 2018,
+                    "genre": ["Bluegrass", "Country"]
+                },
+                {
+                    "title": "Livin' on a Prayer",
+                    "artist": "Bon Jovi",
+                    "year": 1986,
+                    "genre": ["Rock"]
+                },
+                {
+                    "title": "Chicken Fried",
+                    "artist": "Zac Brown Band",
+                    "year": 2008,
+                    "genre": ["Country"]
+                },
+                {
+                    "title": "Georgia",
+                    "artist": "Vance Joy",
+                    "year": 2014,
+                    "genre": ["Folk", "Indie", "Pop"]
+                }
+            ],
+            "artists": ["TALK", "Zac Brown Band", "Bon Jovi", "Vance Joy", "Parcels", "Noah Kahn", "Dierks Bentley"],
+            "genres": ["Indie", "Rock", "Country", "Folk", "Alternative", "Pop", "Bluegrass"]
+        }
+
+        window.onload = () => {
+            document.getElementById("content").innerHTML = JSON.stringify(myJson);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>JSON-1 Assignment</h1>
+    <div id="content"></div>
+</body>
+</html>
