@@ -13,15 +13,12 @@
 
     <script>
         function populateSongList(data) {
-            console.log('HERE1');
             var obj = data;
-            console.log('HERE2');
             var songList = $('div', {
                 id: 'song-container'
             });
-            console.log('HERE3');
+            console.log(data);
             $('body').append(songList);
-            console.log('HERE4');
             $.each(obj.songs,(index,element) => {
                 var songBlock = $('div', {
                     id: 'song-block-' + index
@@ -42,7 +39,7 @@
                 songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
             })
         }
-        console.log("HERE");
+
         $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
     </script>
 </head>
