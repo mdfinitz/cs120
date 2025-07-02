@@ -13,14 +13,15 @@
 
     <script>
         function populateSongList(data) {
+            console.log('HERE1');
             var obj = data;
-            
+            console.log('HERE2');
             var songList = $('div', {
                 id: 'song-container'
             });
-
+            console.log('HERE3');
             $('body').append(songList);
-
+            console.log('HERE4');
             $.each(obj.songs,(index,element) => {
                 var songBlock = $('div', {
                     id: 'song-block-' + index
