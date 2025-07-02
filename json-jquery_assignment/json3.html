@@ -24,6 +24,7 @@
                 $.each(obj.genres,(index,element) => {
                     genre = $('<option>');
                     if (index == 0)  genre.prop('selected',true);
+                    genre.html(element);
                     $('#song-select').append(genre);
                 })
             }
