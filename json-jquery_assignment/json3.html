@@ -9,8 +9,27 @@
 
     </style>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script>
-        
+        $(document).ready(function() {
+            function populateSongList(data) {
+                var obj = data;
+                var genreSelect = $('<select>', {
+                    id: 'song-select',
+                    size: '10'
+                });
+                $('body').append(genreSelect);
+
+                $.each(obj.genres,(index,element) => {
+                    genre = $('<option>');
+                    if (index == 0)  genre.prop('selected',true);
+                    $('#song-select').append(genre);
+                })
+            }
+
+            $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
+        });
     </script>
 </head>
 
