@@ -42,7 +42,7 @@
                 songInfo.innerHTML = 'Artist: ' + element.artist + '<br />Genre: ' + element.genre.join(', ') + '<br />Released ' + element.year;
             })
         }
-
+        console.log("HERE");
         $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
     </script>
 </head>
