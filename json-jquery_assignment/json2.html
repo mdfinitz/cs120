@@ -18,8 +18,8 @@
                 var songList = $('div', {
                     id: 'song-container'
                 });
-                console.log(data);
                 $('body').append(songList);
+                console.log(data);
                 $.each(obj.songs,(index,element) => {
                     var songBlock = $('div', {
                         id: 'song-block-' + index
