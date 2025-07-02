@@ -14,6 +14,7 @@
     <script>
         $(document).ready(function() {
             function populateSongList(data) {
+                obj = data;
                 
                 $.each(obj.songs,(index,element) => {
                     var songBlock = $('div', {
