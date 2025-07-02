@@ -14,18 +14,21 @@
     <script>
         $(document).ready(function() {
             function populateSongList(data) {
-                obj = data;
-                
+                var obj = data;
+                var songList = $('<div>', {
+                    id: 'song-container'
+                });
+                $('body').append(songList);
                 $.each(obj.songs,(index,element) => {
-                    var songBlock = $('div', {
+                    var songBlock = $('<div>', {
                         id: 'song-block-' + index
                     });
                     
-                    var songTitle = $('div', {
+                    var songTitle = $('<div>', {
                         class: 'song-title'
                     });
 
-                    var songInfo = $('div', {
+                    var songInfo = $('<div>', {
                         class:'song-info'
                     });
 
@@ -44,6 +47,5 @@
 
 <body>
     <h1>JSON-2 Assignment</h1>
-    <div id="song-container"></div>
 </body>
 </html>
