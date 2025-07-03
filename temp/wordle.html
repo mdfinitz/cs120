@@ -549,7 +549,7 @@
         }
 
         window.onload = () => {
-            if(document.cookie === '') initializeCookies();
+            if (!document.cookie.includes('statistic')) initializeCookies();
             console.log(document.cookie);
             sim = new Wordle();
             sim.getNewWord();
