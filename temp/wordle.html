@@ -1,0 +1,626 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Wordle</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style type='text/css'>
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        #board,.key-row,.keyboard-letter,.word,.letter {
+            display:flex;
+        }
+
+        #board {
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            gap:10px;
+            margin:30px 0px;
+        }
+
+        .word {
+            justify-content:space-between;
+            gap:10px;
+        }
+
+        .key-row {
+            justify-content:center;
+            gap:10px;
+            margin:10px 0px;
+        }
+
+        .letter,.keyboard-letter {
+            justify-content:center;
+            align-items:center;
+            box-sizing:border-box;
+            font-weight:600;
+        }
+
+        .keyboard-letter {
+            border:2px solid black;
+            border-radius:5px;
+            height:30px;
+            width:40px;
+        }
+
+        .letter {
+            border:2px solid black;
+            height:40px;
+            width:40px;
+            border-radius:10px;
+        }
+
+        #word-input {
+            margin:20px 0px;
+        }
+
+        .pop-up-message {
+            display:none;
+            width:500px;
+            margin:20px auto;
+            border-radius:25px;
+            text-align:center;
+            padding:10px;
+            font-size:15px;
+        }
+
+        #wrong-word-message,#error-message {
+            color:red;
+            border:2px solid red;
+            background-color:#fcdbdb;
+
+        }
+
+        #right-word-message {
+            color:#1B9429;
+            border:2px solid #1B9429;
+            background-color:#baf5c0;
+        }
+
+        #statistics {
+            color:#09098b;
+            border:2px solid #09098b;
+            background-color:#c6caf8;
+        }
+
+        #restart-game {
+            display:block;
+            margin:0px auto;
+            width:150px;
+            display:none;
+        }
+
+        #word-input,#restart-block,#statistics {
+            text-align:center;
+        }
+
+        #guess-word,#submit-word {
+            display:inline-block;
+        }
+
+        #wrong-word,#word-results {
+            margin:10px 0px;
+        }
+
+        #word-results {
+            text-align:left;
+        }
+
+        ul {
+            margin:10px 0px 0px 0px;
+        }
+
+        .grey,.yellow,.green {
+            color:white;
+            border:none;
+        }
+
+        .grey {
+            background-color:grey;
+        }
+
+        .yellow {
+            background-color:#E0D684;
+        }
+
+        .green {
+            background-color:#7BE096;
+        }
+    </style>
+
+    <script>
+
+        randWords = ['AGREE','ALLOW','BASIL','BOARD','BREAD',
+                     'CLEAR','CRATE','DREAD','EAGER','EAGLE',
+                     'FABLE','FALSE','FRESH','GLORY','HOTEL',
+                     'INNER','LABOR','LABEL','MOVIE','MOUSE',
+                     'PILOT','PRIZE','RADAR','RULER','SCARF',
+                     'SCRAP','SKILL','TROUT','TIMER','ZEBRA'];
+
+        numToWord = new Map([[0,'first'],[1,'second'],[2,'third'],[3,'fourth'],[4,'fifth']]);
+
+        keyboardArr = [['Q','W','E','R','T','Y','U','I','O','P'],
+                           ['A','S','D','F','G','H','J','K','L'],
+                           ['Z','X','C','V','B','N','M']];
+
+        function initializeCookies() {
+            obj = {
+                gamesPlayed:0,
+                successfulGames:0,
+                wordAverage:0
+            }
+            document.cookie = 'statistics=' + JSON.stringify(obj) + '; expires=' + getExpirationDate();
+        }
+
+        function getExpirationDate() {
+            date = new Date();
+            date.setTime(date.getTime() + 30*1000*60*60*24);
+            return date.toUTCString();
+        }
+
+        function getCurrentStatistics() {
+            dataArr = document.cookie.split(';');
+            dataProperty = dataArr[0];
+            dataValues = dataProperty.substring(11,dataProperty.length);
+            console.log(dataValues);
+            stats = JSON.parse(dataValues);
+            return stats;
+        }
+
+        function setCookies(guessedCorrectly,numGuess) {
+            var numPlayed;
+            var numSuccess;
+            var numAverage;
+            stats = getCurrentStatistics();
+
+            numPlayed = stats['gamesPlayed'] + 1;
+            
+            if (guessedCorrectly) numSuccess = stats['successfulGames'] + 1;
+
+            numAverage = Math.round(((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed);
+
+            updatedStats = {
+                gamesPlayed:numPlayed,
+                successfulGames:numSuccess,
+                wordAverage:numAverage
+            }
+
+            document.cookie = 'statistics=' + JSON.stringify(updatedStats) + '; expires=' + getExpirationDate();
+        }
+
+        function getGamesPlayed() {
+            data = getCurrentStatistics();
+            return data['gamesPlayed'];
+        }
+
+        function getSuccessfulGames() {
+            data = getCurrentStatistics();
+            return data['successfulGames'];
+        }
+
+        function getWordAverage() {
+            data = getCurrentStatistics();
+            return data['wordAverage'];
+        }
+
+        /*
+         * Name:      startNewWordle
+         * Purpose:   Begins a new wordle round by clearing the board and keyboard.
+         *            Instantiaes a new WordleRound instance.
+         * Arguments: The event attached to resetGame event handler (line 426).
+         */
+        function startNewWordle(event) {
+            //Hides and disables the 'Reset' button
+            event.target.disabled = true;
+            event.target.style.display = 'none';
+
+            //Clears the colors and text on all #board blocks
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 5; j++) {
+                    let block = document.getElementById('' + i + j)
+                    clearAllColors(block);
+                    block.innerHTML = '';
+                }
+            }
+
+            //Clears the colors on all #keyboard blocks
+            for (let i = 0; i < keyboardArr.length; i++) {
+                for (let j = 0; j < keyboardArr[i].length; j++) {
+                    let block = document.getElementById(keyboardArr[i][j]);
+                    clearAllColors(block);
+                }
+            }
+
+            //Instantiates a new WordleRound instance
+            sim.getNewWord();
+
+            //Reveals the 'Check my Guess' button
+            document.getElementById('word-input').style.display = 'block';
+            hideAllMessages();
+        }
+
+        /*
+         * Name:      hideAllMessages
+         * Purpose:   Hides all pop up messages on browser by changing display to none
+         *            for any div with class 'pop-up-message'.
+         * Arguments: None
+         */
+        function hideAllMessages() {
+            for(let message of document.getElementsByClassName('pop-up-message')) {
+                message.style.display = 'none';
+            }
+        }
+
+        /*
+         * Name:      clearAllColors
+         * Purpose:   Removes all color classes from any #board or #keyboard child element.
+         * Arguments: A child div of #board or #keyboard that represents a single block on the screen.
+         */
+        function clearAllColors(block) {
+            if (block.classList.contains('grey')) block.classList.remove('grey');
+            if (block.classList.contains('yellow')) block.classList.remove('yellow');
+            if (block.classList.contains('green')) block.classList.remove('green');
+        }
+
+        /*
+         * Name:      revealRestartButton
+         * Purpose:   Hides and disables the 'Check my Guess' button and respective text input.
+         *            Shows and enables the 'Reset' button.
+         * Arguments: None
+         */
+        function revealRestartButton() {
+            //Hides and disables 'Check my Guess' button and input box
+            document.getElementById('guess-word').disabled = true;
+            document.getElementById('submit-word').disabled = true;
+            document.getElementById('word-input').style.display = 'none';
+
+            //Shows and enables the 'Reset' button
+            let reset = document.getElementById('restart-game');
+            reset.style.display = 'block';
+            reset.disabled = false;
+        }
+
+        /*
+         * Name:      isWordValid
+         * Purpose:   Checks to see if the input is a 5 letter word with alphabetical letters.
+         * Arguments: The word guessed.
+         * Returns:   True if the word is valid and false otherwise.
+         */
+        function isWordValid(guessWord) {
+            let errorMessage = document.getElementById('error-message');
+            //Regular expression checking to see if input is a string of 5 alphabetical letters
+            let regex = new RegExp('^[A-Za-z]{5}$');
+
+            if (regex.test(guessWord)) {
+                return true;
+            }
+            //If it's not a valid word we tell player and return false
+            else {
+                errorMessage.innerHTML = "' " + guessWord + " '" + " is not valid input.<br /> Please enter a valid 5 letter word.";
+                errorMessage.style.display = 'block';
+                return false;
+            }
+        }
+
+        /*
+         * Name:      initializeLetterMap
+         * Purpose:   Creates a map object in which each letter in the answer word is a key,
+         *            and the corresponding value is the number of times the letter shows up
+         *            in the word.
+         * Arguments: A word as an array.
+         * Returns:   A Map object containing the letter frequency of the answer word.
+         */
+        function initializeLetterMap(wordArr) {
+            let map = new Map();
+            wordArr.forEach((element) => {
+                //If letter does not exist in map then we add it and set value to 1
+                if (!map.has(element)) map.set(element,1);
+                else {
+                    //We already enountered letter so we increment value
+                    map.set(element,map.get(element) + 1);
+                }
+            });
+            return map;
+        }
+
+        /*
+         * Name:      initializeTrackMap
+         * Purpose:   Initializes a map for the guess word where each letter in the word is a key.
+         *            All values are set to zero. 
+         * Arguments: The guess word as an array.
+         */
+        function initializeTrackMap(wordArr) {
+            let map = new Map();
+            //Add each letter in word to map and set value to 0
+            wordArr.forEach((element,index) => {
+                map.set(element,0);
+            });
+            return map;
+        }
+
+        /*-----------------------------------*/
+        /*         CLASS DECLARATION         */
+        /*-----------------------------------*/
+
+        function Wordle() {
+
+            this.currWord = 0;
+            /*this.answerWord = 'SKILL';*/
+            this.answerWord;
+            this.answerWordArray;
+            this.answerLetterMap;
+
+            this.setNewWord = function(word) {
+                this.currWord = 0;
+                this.answerWord = word;
+                this.answerWordArray = word.split('');
+                this.answerLetterMap = initializeLetterMap(this.answerWordArray);
+            }
+
+            this.getNewWord = function() {
+                var newWord;
+                document.getElementById('guess-word').disabled = true;
+                document.getElementById('submit-word').disabled = true;
+                fetch('https://random-word-api.vercel.app/api?words=1&length=5')
+                    .then(response => {
+                        if (!response.ok) throw new Error();
+                        return response.json()
+                    })
+                    .then(data => {
+                        newWord = data[0].toUpperCase();
+                        sim.setNewWord(newWord);
+                    })
+                    .catch(error => {
+                        sim.setNewWord(randWords[Math.floor(Math.random()*30)]);
+                    })
+                    .finally(() => {
+                        console.log(newWord);
+                        document.getElementById('guess-word').disabled = false;
+                        document.getElementById('submit-word').disabled = false;
+                    });
+            }
+
+            /*
+             * Name:      colorBoardRow
+             * Purpose:   Colors the letter tiles for a single row on the #board in the browswer.
+             * Arguments: The word that was guessed for that row.
+             * Returns:   Does not have an explicit return type. Colors tiles on board as an effect.
+             */
+            this.colorBoardRow = function(guessWordArr) {
+                //First loops colors letters that are in correct position or not in word
+                guessWordArr.forEach((element,index) => {
+                    let currLetter = document.getElementById('' + this.currWord + index);
+                    let keyboardLetter = document.getElementById(element);
+                    currLetter.innerHTML = element;
+                    //Respective indices in answer word and guess word are the same
+                    if (element == this.answerWordArray[index]) {
+                        currLetter.classList.add('green');
+                        //If letter was initially marked as being in wrong position on keyboard (yellow) then we switch it to green
+                        if (keyboardLetter.classList.contains('yellow')) keyboardLetter.classList.remove('yellow');
+                        //Color block on #board green
+                        keyboardLetter.classList.add('green');
+                        //Letter was encountered so we decrement its value in letterMap
+                        this.answerLetterMap.set(element,this.answerLetterMap.get(element) - 1);
+                    }
+                    //Letter does not occur in letterMap so it can't be in the word. As a result we color #board and #keyboard blocks grey.
+                    if (!this.answerLetterMap.has(element)) {
+                        currLetter.classList.add('grey');
+                        keyboardLetter.classList.add('grey');
+                    }
+                })
+
+                guessWordArr.forEach((element,index) => {
+                    let currLetter = document.getElementById('' + this.currWord + index);
+                    let keyboardLetter = document.getElementById(element);
+                    //Index of the guess word array has not had a color assigned to it yet
+                    if (!currLetter.classList.contains('green') && !currLetter.classList.contains('grey')) {
+                        let count = this.answerLetterMap.get(element);
+                        //If the letter has a value greater than 0 in the letterMap then this occurance of the letter belongs in the answer word.
+                        if (count > 0) {
+                            //Color the block in #board and #keyboard yellow
+                            currLetter.classList.add('yellow');
+                            if (!keyboardLetter.classList.contains('green')) keyboardLetter.classList.add('yellow');
+                            this.answerLetterMap.set(element,count - 1);
+                        }
+                        //The letter has a value of 0 in the letterMap so this specific letter occured in the guess word too many times.
+                        else {
+                            currLetter.classList.add('grey');
+                        }
+                    }
+                })
+            }
+
+            /*
+             * Name:      checkWord
+             * Purpose:   Verifies that the word guessed is a valid word and then colors the
+             *            board for that particular row accordingly. Displays applicable messages
+             *            to the browser and results for each individual letter.
+             * Arguments: The event attached to submitWord event handler (line 422).
+             */
+            this.checkWord = function(event) {
+                hideAllMessages();
+                let word = document.getElementById('guess-word').value.toUpperCase();
+                //Removes results from last word guessed
+                document.getElementById('guess-word').value = '';
+                
+                //If word is not valid then we do nothing
+                if (!isWordValid(word)) return;
+            
+                //Word is valid so we color that row of the board accordingly
+                this.colorBoardRow(word.split(''));
+
+                //If word is correct then we print message and reveal 'Restart' button
+                if(word == this.answerWord) {
+                    document.getElementById('right-word-message').style.display = 'block';
+                    setCookies(true,this.currWord + 1);
+                    this.printGameStatistics();
+                    revealRestartButton();
+                }
+                //Word was not correct so round is ongoing
+                else this.printIncorrectGuessResults(word);
+                //Reset answerLetterMap for next word to be guessed
+                this.answerLetterMap = initializeLetterMap(this.answerWordArray);
+            }
+
+            this.printIncorrectGuessResults = function(guessWord) {
+                let wrongWordMessage = document.getElementById('wrong-word-message');
+                let wrongWord = document.getElementById('wrong-word')
+                let wordResults = document.getElementById('word-results');
+                let results = this.printGuessExplanation(guessWord.split(''));
+                wrongWordMessage.style.display = 'block';
+                //The player has guesses remaining so we increment currWord by 1 to move to next row on board
+                if (this.currWord < 5) {
+                    let plural = ' ';
+                    if (this.currWord < 4) plural = 'es ';
+                    wrongWord.innerHTML = "Close but note quite!<br />You have " + (5 - this.currWord) + " guess" + plural + "remaining.<br />See below to check which letters are incorrect.";
+                    wordResults.innerHTML = results;
+                    ++this.currWord;
+                }
+                //The player was on their last guess so we reveal 'Restart' button
+                else {
+                    wrongWord.innerHTML = 'Close but not quite!<br />Unfortunately, you are all out of guesses.<br />Press the RESET button to start a new game!';
+                    wordResults.innerHTML = 'Answer: ' + this.answerWord + '<br />' + results;
+                    setCookies(true,this.currWord + 1);
+                    this.printGameStatistics();
+                    revealRestartButton();
+                }
+            }
+
+            /*
+             * Name:      printGuessExplanation
+             * Purpose:   Summarizes the result of each letter in the guess word. I.e., states if the
+             *            letter is in the correct position, in the incorrect position, or not in the word
+             *            entirely.
+             * Arguments: The word that was guessed.
+             * Returns:   A string listing the word guessed and information on each individual letter.
+             */
+            this.printGuessExplanation = function(guessWordArr) {
+                let str = 'Guess: ' + guessWordArr.join('') + '<br /><ul>';
+                let constGuessMap = initializeLetterMap(guessWordArr);
+                let trackGuessMap = initializeTrackMap(guessWordArr); 
+                //Prints results for each letter of the guess word       
+                guessWordArr.forEach((element,index) => {
+                    str += '<li>the ';
+                    //Letter occurs more than once so we use first, second, third... label for the letter
+                    if (constGuessMap.get(element) > 1) {
+                        str += numToWord.get(trackGuessMap.get(element)) + ' ';
+                        trackGuessMap.set(element,trackGuessMap.get(element) + 1);
+                    }
+                    //Says if the letter is in the right position, in the wrong position, or not in the word
+                    let letterPosition = this.letterPlacementDescription(index);
+                    str += element + ' ' + letterPosition + '</li>';
+                });
+                str += '</ul>';
+                return str;
+            }
+
+            this.letterPlacementDescription = function(index) {
+                let str;
+                let block = document.getElementById('' + this.currWord + index);
+                if (block.classList.contains('green')) str = ' is in the right place';
+                else if (block.classList.contains('yellow')) str = ' is in the wrong place';
+                else if (block.classList.contains('grey')) str = ' is not in the word';
+                return str;
+            }
+
+            this.printGameStatistics = function() {
+                block = document.getElementById('statistics');
+                plural = ' '
+                if (getGamesPlayed > 1) plural = 'es '
+                str = 'You have won ' + 
+                      getSuccessfulGames() +
+                      ' out of ' +
+                      getGamesPlayed() +
+                      ' game' + plural + 'played!<br />On average it takes you ' +
+                      getWordAverage() +
+                      ' words to guess the answer!';
+                block.innerHTML = str;
+                block.style.display = 'block';
+            }
+        }
+
+        window.onload = () => {
+            if(document.cookie === '') initializeCookies();
+            console.log(document.cookie);
+            sim = new Wordle();
+            sim.getNewWord();
+
+            const submitWord = document.getElementById('submit-word');
+            submitWord.addEventListener('click',(event) => sim.checkWord(event));
+
+            const resetGame = document.getElementById('restart-game');
+            resetGame.addEventListener('click',startNewWordle);
+        }
+        
+    </script>
+
+</head>
+
+<body>
+    <script>
+        container = document.createElement('div');
+        container.setAttribute('id','board');
+        //Create container for board
+        document.body.appendChild(container);
+
+        for (let i = 0; i < 6; i++) {
+            //Creates each row in the board
+            row = document.createElement('div');
+            row.setAttribute('id',i + "");
+            row.setAttribute('class','word');
+            container.appendChild(row);
+
+            for (let j = 0; j < 5; j++) {
+                //Creates the 5 letter blocks in each row
+                row_col = document.createElement('div');
+                row_col.setAttribute('id','' + i + j);
+                row_col.setAttribute('class','letter');
+                row.appendChild(row_col);
+            }
+        }
+            
+        keyboard = document.createElement('div');
+        keyboard.setAttribute('id','keyboard');
+        document.body.appendChild(keyboard);
+
+        for (let i = 0; i < keyboardArr.length; i++) {
+            //Creates a row for the keyboard
+            row = document.createElement('div');
+            row.setAttribute('id','key-row-' + i);
+            row.setAttribute('class','key-row');
+            keyboard.appendChild(row);
+
+            for (let j = 0; j < keyboardArr[i].length; j++) {
+                //Creates each letter in the respective row using letters in keyboard array
+                letter = document.createElement('div');
+                letter.setAttribute('id',keyboardArr[i][j]);
+                letter.setAttribute('class','keyboard-letter');
+                letter.innerHTML = keyboardArr[i][j];
+                row.appendChild(letter);
+            }
+        }
+    </script>
+    <div id="word-input">
+        <input type="text" name="guess-word" id="guess-word" />
+        <input type="button" value="Check my Guess" id="submit-word">
+    </div>
+    <input type="button" disabled value="Click to Restart Game" id="restart-game">
+    </div>
+    <div id="error-message" class="pop-up-message"></div>
+    <div id="right-word-message" class="pop-up-message">CONGRATULATIONS!<br />You guessed the word correctly.<br />Click the button above to start a new game!</div>
+    <div id="wrong-word-message" class="pop-up-message">
+        <div id="wrong-word"></div>
+        <div id="word-results"></div>
+    </div>
+    <div id="statistics" class="pop-up-message"></div>
+</body>
+</html>
