@@ -174,11 +174,11 @@
             dataArr.forEach((element) => {
                 if (element.includes('statistics')) {
                     str = element.trimStart();
-                    num = element.indexOf('statistics');
-                    dataValues = element.substring(num);
+                    num = element.indexOf('statistics=');
+                    dataValues = element.substring(num + 11);
                 }
             })
-            
+            console.log(davaValues);
             stats = JSON.parse(dataValues);
             return stats;
         }
