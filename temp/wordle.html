@@ -168,10 +168,17 @@
         }
 
         function getCurrentStatistics() {
+            var stats;
+
             dataArr = document.cookie.split(';');
-            dataProperty = dataArr[0];
-            dataValues = dataProperty.substring(11,dataProperty.length);
-            console.log(dataValues);
+            dataArr.forEach((element) => {
+                if (element.includes('statistics')) {
+                    str = element.trimStart();
+                    num = element.indexOf('statistics');
+                    stats = element.substring(num);
+                }
+            })
+            
             stats = JSON.parse(dataValues);
             return stats;
         }
@@ -549,8 +556,7 @@
         }
 
         window.onload = () => {
-            if (!document.cookie.includes('statistic')) initializeCookies();
-            console.log(document.cookie);
+            if (!document.cookie.includes('statistics')) initializeCookies();
             sim = new Wordle();
             sim.getNewWord();
 
