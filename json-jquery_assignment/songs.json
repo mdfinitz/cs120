@@ -62,5 +62,5 @@
         }
     ],
     "artists": ["TALK", "Zac Brown Band", "Bon Jovi", "Vance Joy", "Parcels", "Noah Kahn", "Dierks Bentley"],
-    "genres": ["Indie", "Rock", "Country", "Folk", "Alternative", "Pop", "Bluegrass"]
+    "genres": ["Alternative", "Bluegrass", "Country", "Folk", "Indie", "Pop", "Rock"]
 }
