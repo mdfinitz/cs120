@@ -196,7 +196,7 @@
             updatedStats = {
                 gamesPlayed:numPlayed,
                 successfulGames:numSuccess,
-                wordAverage:Math.round(numAverage)
+                wordAverage:numAverage
             }
 
             document.cookie = 'statistics=' + JSON.stringify(updatedStats) + '; expires=' + getExpirationDate();
@@ -214,7 +214,7 @@
 
         function getWordAverage() {
             data = getCurrentStatistics();
-            return data['wordAverage'];
+            return Math.round(data['wordAverage']);
         }
 
         /*
