@@ -191,6 +191,11 @@
             
             if (guessedCorrectly) ++numSuccess;
 
+            console.log(stats['gamesPlayed']);
+            console.log(stats['wordAverage']);
+            console.log(numGuess);
+            console.log(numPlayed);
+
             var numAverage = ((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed;
 
             updatedStats = {
