@@ -191,12 +191,12 @@
             
             if (guessedCorrectly) ++numSuccess;
 
-            var numAverage = Math.round(((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed);
+            var numAverage = ((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed;
 
             updatedStats = {
                 gamesPlayed:numPlayed,
                 successfulGames:numSuccess,
-                wordAverage:numAverage
+                wordAverage:Math.round(numAverage);
             }
 
             document.cookie = 'statistics=' + JSON.stringify(updatedStats) + '; expires=' + getExpirationDate();
