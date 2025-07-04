@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON-3 Assignment</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style type='text/css'>
+        body {
+            font-family:"Noto Sans", sans-serif;
+        }
+
+        input {
+            display:block;
+            margin:20px 0px;
+            width:60px;
+            height:30px;
+            border-radius:5px;
+            font-size:15px;
+            border-width:1.5px;
+        }
+
+        #list-header {
+            font-size:20px;
+            font-weight:500;
+            font-style:italic;
+            padding-top:10px;
+            display:inline-block;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            function populateSongList(data) {
+
+                obj = data;
+
+                let genreSelect = $('<select>', {
+                    id: 'song-select',
+                    size: '7'
+                });
+
+                $('#filter-genre').before(genreSelect);
+
+                $.each(obj.genres,(index,element) => {
+                    genre = $('<option>');
+                    if (index == 0) genre.prop('selected',true);
+                    genre.html(element);
+                    $('#song-select').append(genre);
+                });
+
+                $('#filter-genre').prop('disabled',false);
+            }
+
+            var obj;
+
+            $.get('https://mdfinitz.github.io/cs120/json-jquery_assignment/songs.json',populateSongList,'json');
+
+            $('#filter-genre').click(
+                function()
+                {
+                    $('#list-header').css('border-top', '2px solid black')
+                    let selectedGenre = $('#song-select').val();
+                    $('#list-header').html('If you enjoy ' + selectedGenre + ', then you might like these songs:')
+                    $('#song-display').html('<ul>');
+                    $.each(obj.songs,(index,element) => {
+                        if (element.genre.includes(selectedGenre)) $('#song-display').append('<li>' + element.title + '</li>');
+                    });
+                    $('#song-display').append('</ul>');
+                }
+            );
+        });
+    </script>
+</head>
+
+<body>
+    <h1>JSON-3 Assignment</h1>
+    <input type="button" value="Filter" id="filter-genre" disabled>
+    <div id="list-header"></div>
+    <div id="song-display"></div>
+</body>
+</html>
