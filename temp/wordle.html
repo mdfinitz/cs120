@@ -184,16 +184,14 @@
         }
 
         function setCookies(guessedCorrectly,numGuess) {
-            var numPlayed;
-            var numSuccess;
-            var numAverage;
             stats = getCurrentStatistics();
 
-            numPlayed = stats['gamesPlayed'] + 1;
+            var numPlayed = stats['gamesPlayed'] + 1;
+            var numSuccess = stats['successfulGames'];
             
-            if (guessedCorrectly) numSuccess = stats['successfulGames'] + 1;
+            if (guessedCorrectly) ++numSuccess;
 
-            numAverage = Math.round(((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed);
+            var numAverage = Math.round(((stats['gamesPlayed']*stats['wordAverage']) + numGuess)/numPlayed);
 
             updatedStats = {
                 gamesPlayed:numPlayed,
@@ -496,7 +494,7 @@
                 else {
                     wrongWord.innerHTML = 'Close but not quite!<br />Unfortunately, you are all out of guesses.<br />Press the RESET button to start a new game!';
                     wordResults.innerHTML = 'Answer: ' + this.answerWord + '<br />' + results;
-                    setCookies(true,this.currWord + 1);
+                    setCookies(false,this.currWord + 1);
                     this.printGameStatistics();
                     revealRestartButton();
                 }
